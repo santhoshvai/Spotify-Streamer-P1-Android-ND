@@ -103,8 +103,6 @@ public class MainActivityFragment extends Fragment {
                                 }
                             })
                             .show();
-//                    Toast.makeText(getActivity().getApplicationContext(), "Artist not found. Please refine your search.",
-//                            Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -169,23 +167,35 @@ public class MainActivityFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             // Get the data item for this position
             Artist artist = getItem(position);
+            // A holder will hold the references
+            // to your views.
+            ViewHolder holder;
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_artists, parent, false);
+                holder = new ViewHolder();
+                holder.textView = (TextView) convertView.findViewById(R.id.list_item_artists_textview);
+                holder.imageView = (ImageView) convertView.findViewById(R.id.list_item_artists_artistImageView);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
             }
-            ImageView imageView = (ImageView) convertView.findViewById(R.id.list_item_artists_artistImageView);
-            TextView textView = (TextView) convertView.findViewById(R.id.list_item_artists_textview);
             // default image if there is no artist image
             String imageUrl = "https://lh4.ggpht.com/NjSeU8ya6h8cNL6JntWZqhlkmAHKcy0vJmxDBqF0x_y4izs6skpxg6a4TRsf3Jza7kk=w300";
             if (artist.images.size() > 0) {
                 imageUrl = artist.images.get(0).url;
             }
-            Glide.with(getActivity()).load(imageUrl).into(imageView);
-            textView.setText(artist.name);
+            Glide.with(getActivity()).load(imageUrl).into(holder.imageView);
+            holder.textView.setText(artist.name);
             // Return the completed view to render on screen
             return convertView;
         }
 
+    }
+    class ViewHolder {
+        // declare your views here
+        TextView textView;
+        ImageView imageView;
     }
     public boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
