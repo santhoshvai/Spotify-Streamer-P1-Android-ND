@@ -2,8 +2,10 @@ package com.example.android.spotifystreamer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -92,8 +94,17 @@ public class MainActivityFragment extends Fragment {
                 }
                 // when the artist is not found
                 if (artistSearchResult.size() == 0) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Artist not found. Please refine your search.",
-                            Toast.LENGTH_SHORT).show();
+                    Snackbar
+                            .make(getActivity().findViewById(R.id.listview_artists), "Artist not found. Please refine your search.", Snackbar.LENGTH_SHORT)
+                            .setAction("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            })
+                            .show();
+//                    Toast.makeText(getActivity().getApplicationContext(), "Artist not found. Please refine your search.",
+//                            Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -120,7 +131,18 @@ public class MainActivityFragment extends Fragment {
                 public void onTextChanged(CharSequence s, int start,
                                           int before, int count) {
                     if(s.length() != 0) {
-                        new updateArtistList().execute(new String[]{s.toString()});
+                        if (isNetworkAvailable(getActivity().getApplicationContext()))
+                            new updateArtistList().execute(new String[]{s.toString()});
+                        else
+                            Snackbar
+                                    .make(getActivity().findViewById(R.id.listview_artists), "Check your Internet connectivity.", Snackbar.LENGTH_SHORT)
+                                    .setAction("Ok", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                        }
+                                    })
+                                    .show();
                     }
                 }
             });
@@ -164,5 +186,9 @@ public class MainActivityFragment extends Fragment {
             return convertView;
         }
 
+    }
+    public boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }
