@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.android.spotifystreamer.Utils.MiscUtils;
+import com.example.android.spotifystreamer.Utils.UIUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -115,24 +117,34 @@ public class TopTracksActivityFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             // Get the data item for this position
             Track track = getItem(position);
+            ViewHolder holder;
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_tracks, parent, false);
+                holder = new ViewHolder();
+                holder.trackTextView = (TextView) convertView.findViewById(R.id.list_item_tracks_track_textview);
+                holder.trackAlbumView = (TextView) convertView.findViewById(R.id.list_item_tracks_album_textview);
+                holder.imageView = (ImageView) convertView.findViewById(R.id.list_item_tracks_trackImageView);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
             }
-            ImageView imageView = (ImageView) convertView.findViewById(R.id.list_item_tracks_trackImageView);
-            TextView trackTextView = (TextView) convertView.findViewById(R.id.list_item_tracks_track_textview);
-            TextView trackAlbumView = (TextView) convertView.findViewById(R.id.list_item_tracks_album_textview);
             // default image if there is no track image
             String imageUrl = "https://lh4.ggpht.com/NjSeU8ya6h8cNL6JntWZqhlkmAHKcy0vJmxDBqF0x_y4izs6skpxg6a4TRsf3Jza7kk=w300";
             if (track.album.images.size() > 0) {
                 imageUrl = track.album.images.get(0).url;
             }
-            Glide.with(getActivity()).load(imageUrl).into(imageView);
-            trackTextView.setText(track.name);
-            trackAlbumView.setText(track.album.name);
+            Glide.with(getActivity()).load(imageUrl).into(holder.imageView);
+            holder.trackTextView.setText(track.name);
+            holder.trackAlbumView.setText(track.album.name);
             // Return the completed view to render on screen
             return convertView;
         }
 
+    }
+    class ViewHolder {
+        TextView trackTextView;
+        TextView trackAlbumView;
+        ImageView imageView;
     }
 }
