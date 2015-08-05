@@ -17,6 +17,7 @@
         android:gravity="center_vertical"
         android:id="@+id/list_item_artists_textview"
         android:layout_alignParentTop="true"
+        style="@android:style/TextAppearance.Medium"
         android:layout_toRightOf="@+id/list_item_artists_artistImageView"
         android:layout_toEndOf="@+id/list_item_artists_artistImageView" />
 </RelativeLayout>
