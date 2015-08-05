@@ -15,8 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.android.spotifystreamer.Utils.MiscUtils;
-import com.example.android.spotifystreamer.Utils.UIUtils;
+import com.example.android.spotifystreamer.Utils.EllipsizedTextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -123,7 +122,7 @@ public class TopTracksActivityFragment extends Fragment {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_tracks, parent, false);
                 holder = new ViewHolder();
                 holder.trackTextView = (TextView) convertView.findViewById(R.id.list_item_tracks_track_textview);
-                holder.trackAlbumView = (TextView) convertView.findViewById(R.id.list_item_tracks_album_textview);
+                holder.trackAlbumView = (EllipsizedTextView) convertView.findViewById(R.id.list_item_tracks_album_textview);
                 holder.imageView = (ImageView) convertView.findViewById(R.id.list_item_tracks_trackImageView);
                 convertView.setTag(holder);
             } else {
@@ -137,6 +136,7 @@ public class TopTracksActivityFragment extends Fragment {
             Glide.with(getActivity()).load(imageUrl).into(holder.imageView);
             holder.trackTextView.setText(track.name);
             holder.trackAlbumView.setText(track.album.name);
+           // UIUtils.setAndTruncateTextOneLineTxtView(track.album.name, holder.trackAlbumView);
             // Return the completed view to render on screen
             return convertView;
         }
@@ -144,7 +144,7 @@ public class TopTracksActivityFragment extends Fragment {
     }
     class ViewHolder {
         TextView trackTextView;
-        TextView trackAlbumView;
+        EllipsizedTextView trackAlbumView;
         ImageView imageView;
     }
 }
