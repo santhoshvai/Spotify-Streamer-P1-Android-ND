@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.android.spotifystreamer.Utils.EllipsizedTextView;
+import com.example.android.spotifystreamer.Utils.MiscUtils;
+import com.example.android.spotifystreamer.Utils.UIUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,8 +29,11 @@ import java.util.Map;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.Artist;
 import kaaes.spotify.webapi.android.models.Track;
 import retrofit.RetrofitError;
+
+import static android.widget.AdapterView.*;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -38,6 +44,7 @@ public class TopTracksActivityFragment extends Fragment {
     private final SpotifyApi spotifyApi = new SpotifyApi();
     private List<Track> trackListCache = new ArrayList<Track>();
     private String artistId = "";
+    private String artistName = "";
     private final SpotifyService spotify = spotifyApi.getService();
 
     public TopTracksActivityFragment() {
@@ -80,8 +87,22 @@ public class TopTracksActivityFragment extends Fragment {
         listView.setAdapter(mTracksAdapter);
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             artistId = intent.getStringExtra(Intent.EXTRA_TEXT);
+            artistName = intent.getStringExtra("ArtistName");
             new updateTrackList().execute(new String[]{artistId});
         }
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (MiscUtils.isNetworkAvailable(getActivity().getApplicationContext())){
+                    Track track = mTracksAdapter.getItem(position);
+                    Intent playTrackIntent = new Intent(getActivity(), TrackActivity.class)
+                            .putExtra(Intent.EXTRA_TEXT, track.id);
+                    playTrackIntent.putExtra("ArtistName", artistName);
+                    startActivity(playTrackIntent);
+                } else
+                    UIUtils.InternetAccessibilityAlert(getActivity().findViewById(R.id.listview_artists));
+            }
+        });
         return rootView;
     }
 

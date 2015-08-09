@@ -12,21 +12,31 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".TopTracksActivity"
-            android:launchMode="singleTop"
             android:label="@string/title_activity_top_tracks"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.spotifystreamer.MainActivity" />
+        </activity>
+        <activity
+            android:name=".TrackActivity"
+            android:label="@string/title_activity_track"
+            android:theme="@style/CustomActionBarTheme"
+            android:parentActivityName=".TopTracksActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.spotifystreamer.TopTracksActivity" />
         </activity>
     </application>
 
