@@ -1,9 +1,11 @@
 package com.example.android.spotifystreamer.Utils;
 
 import android.support.design.widget.Snackbar;
-import android.text.TextUtils;
+import android.support.v7.graphics.Palette;
 import android.view.View;
-import android.widget.TextView;
+
+import java.util.Collections;
+import java.util.Comparator;
 
 public class UIUtils {
     private static void showShortSnackBar(View view, CharSequence msg, CharSequence actionText){
@@ -24,12 +26,15 @@ public class UIUtils {
     public static void ArtistNotFoundAlert(View view){
         showShortSnackBar(view, "Artist not found. Please refine your search.", "Ok");
     }
-    public static void setAndTruncateTextOneLineTxtView(CharSequence text, TextView tv){
-        final int MAX_ELLIPSIZE_LINES = 100;
-        int mMaxLines = 1;
-        // CharSequence text = tv.getText();
-        CharSequence newText = TextUtils.ellipsize(text, tv.getPaint(), tv.getWidth() * mMaxLines,
-                        TextUtils.TruncateAt.END, false, null);
-        tv.setText(newText);
+    /* Get the color with highest population from a palette */
+    public static Palette.Swatch getDominantSwatch(Palette palette) {
+        // find most-represented swatch based on population
+        return Collections.max(palette.getSwatches(), new Comparator<Palette.Swatch>() {
+            @Override
+            public int compare(Palette.Swatch sw1, Palette.Swatch sw2) {
+                return Integer.valueOf(sw1.getPopulation())
+                        .compareTo(Integer.valueOf(sw2.getPopulation()));
+            }
+        });
     }
 }

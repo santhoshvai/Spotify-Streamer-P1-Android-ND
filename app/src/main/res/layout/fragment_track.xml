@@ -1,20 +1,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.android.spotifystreamer.TrackActivityFragment">
-
-
     <ImageView
+        android:layout_marginTop="@dimen/abc_action_bar_overflow_padding_start_material"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/albumart_imageView"
         android:layout_centerHorizontal="true" />
     <TextView android:layout_width="wrap_content"
         android:id="@+id/track_textview"
+        tools:text ="track name"
         style="@android:style/TextAppearance.Medium"
+        android:textStyle="bold"
         android:layout_below="@+id/albumart_imageView"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
@@ -22,6 +21,7 @@
         android:layout_width="wrap_content"
         android:id="@+id/album_textview"
         android:singleLine="true"
+        tools:text ="album name"
         style="@android:style/TextAppearance.Small"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit ="marquee_forever"
@@ -31,11 +31,63 @@
         android:layout_below="@+id/track_textview"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
-    <com.example.android.spotifystreamer.Utils.EllipsizedTextView
+    <TextView
         android:layout_width="wrap_content"
         android:id="@+id/artist_textview"
+        android:layout_marginBottom="@dimen/abc_button_padding_vertical_material"
+        tools:text ="artist name"
         style="@android:style/TextAppearance.Small"
         android:layout_below="@+id/album_textview"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/artist_textview"
+        android:background="@color/background_material_light">
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:id="@+id/preview_seekBar"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_centerHorizontal="true"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_below="@+id/preview_seekBar">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/previous_imageButton"
+                android:layout_margin="@dimen/abc_button_padding_horizontal_material"
+                android:padding="@dimen/abc_button_padding_horizontal_material"
+                android:layout_centerVertical="true"
+                android:background="?android:selectableItemBackground"
+                android:layout_toLeftOf="@+id/playPause_imageButton"
+                android:src="@mipmap/ic_previous"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/playPause_imageButton"
+                android:layout_margin="@dimen/abc_button_padding_horizontal_material"
+                android:background="?android:selectableItemBackground"
+                android:padding="@dimen/abc_button_padding_horizontal_material"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_play"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/next_imageButton"
+                android:layout_margin="@dimen/abc_button_padding_horizontal_material"
+                android:padding="@dimen/abc_button_padding_horizontal_material"
+                android:background="?android:selectableItemBackground"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/playPause_imageButton"
+                android:src="@mipmap/ic_next"/>
+        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>

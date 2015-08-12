@@ -1,7 +1,6 @@
 package com.example.android.spotifystreamer;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v7.graphics.Palette;
@@ -10,12 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.android.spotifystreamer.Utils.EllipsizedTextView;
-import com.github.florent37.glidepalette.BitmapPalette;
+import com.example.android.spotifystreamer.Utils.UIUtils;
 import com.github.florent37.glidepalette.GlidePalette;
 
 import java.util.HashMap;
@@ -70,37 +69,36 @@ public class TrackActivityFragment extends Fragment {
         @Override
         protected void onPostExecute(Track track) {
             AlbumSimple album = track.album;
-            /*
-            player UI should display the following information:
-                artist name
-                album name
-                album artwork
-                track name
-                track duration
-            */
             String preview_url = track.preview_url;
             String trackName = track.name;
             String albumArtWorkUrl = album.images.get(0).url;
             String albumName = album.name;
             ((TrackActivity) getActivity()).getSupportActionBar().setTitle(trackName);
-            TextView trackNameTextView = (TextView)  getActivity().findViewById(R.id.track_textview);
-            TextView albumNameTextView = (TextView)  getActivity().findViewById(R.id.album_textview);
-            EllipsizedTextView artistNameTextView = (EllipsizedTextView)  getActivity().findViewById(R.id.artist_textview);
-            ImageView albumArtView = (ImageView) getActivity().findViewById(R.id.albumart_imageView);
+            final TextView trackNameTextView = (TextView)  getActivity().findViewById(R.id.track_textview);
+            final TextView albumNameTextView = (TextView)  getActivity().findViewById(R.id.album_textview);
+            final TextView artistNameTextView = (TextView)  getActivity().findViewById(R.id.artist_textview);
+            final ImageView albumArtView = (ImageView) getActivity().findViewById(R.id.albumart_imageView);
             trackNameTextView.setText(trackName);
             albumNameTextView.setText(albumName);
             artistNameTextView.setText(artistName);
             Glide
                     .with(getActivity())
                     .load(albumArtWorkUrl)
-                    .listener(GlidePalette.with(albumArtWorkUrl)
+                    .listener(GlidePalette.with(albumArtWorkUrl).intoCallBack(
+                            new GlidePalette.CallBack() {
 
-                                    .use(GlidePalette.Profile.VIBRANT)
-                                    .intoBackground(getView(), GlidePalette.Swatch.RGB)
-                                    .intoTextColor(trackNameTextView, GlidePalette.Swatch.BODY_TEXT_COLOR)
-                                    .intoTextColor(albumNameTextView, GlidePalette.Swatch.BODY_TEXT_COLOR)
-                                    .intoTextColor(artistNameTextView, GlidePalette.Swatch.BODY_TEXT_COLOR)
-                    )
+                                @Override
+                                public void onPaletteLoaded(Palette palette) {
+                                    //specific task
+                                    Palette.Swatch swatch = UIUtils.getDominantSwatch(palette);
+                                    final int backgroundColor = swatch.getRgb();
+                                    final int textColor = swatch.getBodyTextColor();
+                                    getView().setBackgroundColor(backgroundColor);
+                                    trackNameTextView.setTextColor(textColor);
+                                    albumNameTextView.setTextColor(textColor);
+                                    artistNameTextView.setTextColor(textColor);
+                                }
+                            }))
                     .into(albumArtView);
         }
 
