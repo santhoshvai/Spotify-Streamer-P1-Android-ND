@@ -33,7 +33,7 @@ public class UIUtils {
             @Override
             public int compare(Palette.Swatch sw1, Palette.Swatch sw2) {
                 return Integer.valueOf(sw1.getPopulation())
-                        .compareTo(Integer.valueOf(sw2.getPopulation()));
+                        .compareTo(sw2.getPopulation());
             }
         });
     }

@@ -2,18 +2,19 @@
 <resources>
     <style name="CustomActionBarTheme"
         parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowActionBarOverlay">true</item>
-        <!-- Support library compatibility -->
-        <item name="windowActionBarOverlay">true</item>
+        <!-- colorPrimary is used for the default action bar background -->
+        <!--<item name="colorPrimary">@android:color/transparent</item>-->
 
-        <item name="android:actionBarStyle">@style/ActionBarStyle.Transparent</item>
-        <!-- Support library compatibility -->
-        <item name="actionBarStyle">@style/ActionBarStyle.Transparent</item>
+        <!--&lt;!&ndash; colorPrimaryDark is used for the status bar &ndash;&gt;-->
+        <!--<item name="colorPrimaryDark">@android:color/transparent</item>-->
+        <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <!--&lt;!&ndash; Support library compatibility &ndash;&gt;-->
+        <item name="android:actionBarStyle">@style/ActionBarStyle.Transparent</item>
+        <item name="actionBarStyle">@style/ActionBarStyle.Transparent</item>
     </style>
-    <style name="ActionBarStyle.Transparent" parent="android:Widget.ActionBar">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="background">@android:color/transparent</item>
+    <style name="ActionBarStyle.Transparent" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:background">@color/translucentBlack</item>
+        <item name="background">@color/translucentBlack</item>
     </style>
 </resources>

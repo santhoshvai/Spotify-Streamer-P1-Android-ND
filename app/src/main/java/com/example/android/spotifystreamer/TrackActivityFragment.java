@@ -1,6 +1,8 @@
 package com.example.android.spotifystreamer;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v7.graphics.Palette;
@@ -9,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.github.florent37.glidepalette.GlidePalette;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
@@ -47,6 +49,8 @@ public class TrackActivityFragment extends Fragment {
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             trackId = intent.getStringExtra(Intent.EXTRA_TEXT);
             artistName = intent.getStringExtra("ArtistName");
+            ((TrackActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
+            ((TrackActivity) getActivity()).getSupportActionBar().setTitle(artistName);
             // call async task to load the track
             new loadTrack().execute(new String[]{trackId});
         }
@@ -73,11 +77,12 @@ public class TrackActivityFragment extends Fragment {
             String trackName = track.name;
             String albumArtWorkUrl = album.images.get(0).url;
             String albumName = album.name;
-            ((TrackActivity) getActivity()).getSupportActionBar().setTitle(trackName);
+
             final TextView trackNameTextView = (TextView)  getActivity().findViewById(R.id.track_textview);
             final TextView albumNameTextView = (TextView)  getActivity().findViewById(R.id.album_textview);
             final TextView artistNameTextView = (TextView)  getActivity().findViewById(R.id.artist_textview);
             final ImageView albumArtView = (ImageView) getActivity().findViewById(R.id.albumart_imageView);
+
             trackNameTextView.setText(trackName);
             albumNameTextView.setText(albumName);
             artistNameTextView.setText(artistName);
@@ -93,7 +98,7 @@ public class TrackActivityFragment extends Fragment {
                                     Palette.Swatch swatch = UIUtils.getDominantSwatch(palette);
                                     final int backgroundColor = swatch.getRgb();
                                     final int textColor = swatch.getBodyTextColor();
-                                    getView().setBackgroundColor(backgroundColor);
+                                    getActivity().getWindow().getDecorView().setBackgroundColor(backgroundColor);
                                     trackNameTextView.setTextColor(textColor);
                                     albumNameTextView.setTextColor(textColor);
                                     artistNameTextView.setTextColor(textColor);

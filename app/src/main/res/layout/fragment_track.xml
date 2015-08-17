@@ -1,18 +1,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="?attr/actionBarSize"
+    android:fitsSystemWindows="true"
     tools:context="com.example.android.spotifystreamer.TrackActivityFragment">
     <ImageView
-        android:layout_marginTop="@dimen/abc_action_bar_overflow_padding_start_material"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="Album art"
         android:id="@+id/albumart_imageView"
         android:layout_centerHorizontal="true" />
     <TextView android:layout_width="wrap_content"
         android:id="@+id/track_textview"
         tools:text ="track name"
+        android:singleLine="true"
         style="@android:style/TextAppearance.Medium"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit ="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
         android:textStyle="bold"
         android:layout_below="@+id/albumart_imageView"
         android:layout_height="wrap_content"
@@ -62,32 +68,37 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="@dimen/abc_action_button_min_width_material"
+                android:minHeight="@dimen/abc_action_button_min_height_material"
+                android:contentDescription="Previous"
                 android:id="@+id/previous_imageButton"
                 android:layout_margin="@dimen/abc_button_padding_horizontal_material"
                 android:padding="@dimen/abc_button_padding_horizontal_material"
                 android:layout_centerVertical="true"
                 android:background="?android:selectableItemBackground"
                 android:layout_toLeftOf="@+id/playPause_imageButton"
-                android:src="@mipmap/ic_previous"/>
+                android:src="@drawable/ic_previous"/>
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/playPause_imageButton"
                 android:layout_margin="@dimen/abc_button_padding_horizontal_material"
+                android:contentDescription="Play_Pause"
                 android:background="?android:selectableItemBackground"
                 android:padding="@dimen/abc_button_padding_horizontal_material"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/ic_play"/>
+                android:src="@drawable/ic_play"/>
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/next_imageButton"
                 android:layout_margin="@dimen/abc_button_padding_horizontal_material"
                 android:padding="@dimen/abc_button_padding_horizontal_material"
+                android:contentDescription="Next"
                 android:background="?android:selectableItemBackground"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/playPause_imageButton"
-                android:src="@mipmap/ic_next"/>
+                android:src="@drawable/ic_next"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
