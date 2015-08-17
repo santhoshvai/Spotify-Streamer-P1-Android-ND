@@ -156,7 +156,6 @@ public class TopTracksActivityFragment extends Fragment {
             Glide.with(getActivity()).load(imageUrl).into(holder.imageView);
             holder.trackTextView.setText(track.name);
             holder.trackAlbumView.setText(track.album.name);
-           // UIUtils.setAndTruncateTextOneLineTxtView(track.album.name, holder.trackAlbumView);
             // Return the completed view to render on screen
             return convertView;
         }
