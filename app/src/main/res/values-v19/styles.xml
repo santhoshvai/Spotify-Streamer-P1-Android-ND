@@ -13,7 +13,7 @@
         <item name="android:actionBarStyle">@style/ActionBarStyle.Transparent</item>
         <item name="actionBarStyle">@style/ActionBarStyle.Transparent</item>
     </style>
-    <style name="ActionBarStyle.Transparent" parent="android:Widget.Holo.ActionBar.Solid">
+    <style name="ActionBarStyle.Transparent" parent="@style/Widget.AppCompat.ActionBar">
         <item name="android:background">@color/translucentBlack</item>
         <item name="background">@color/translucentBlack</item>
     </style>

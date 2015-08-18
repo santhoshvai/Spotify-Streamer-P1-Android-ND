@@ -1,5 +1,6 @@
 package com.example.android.spotifystreamer;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,10 @@ public class TrackActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if ((intent != null) && intent.hasExtra("ArtistName")) {
+            getSupportActionBar().setTitle(intent.getStringExtra("ArtistName"));
+        }
         setContentView(R.layout.activity_track);
     }
 

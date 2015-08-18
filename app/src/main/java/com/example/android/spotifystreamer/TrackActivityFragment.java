@@ -48,8 +48,6 @@ public class TrackActivityFragment extends Fragment {
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             trackId = intent.getStringExtra(Intent.EXTRA_TEXT);
             artistName = intent.getStringExtra("ArtistName");
-            ((TrackActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
-            ((TrackActivity) getActivity()).getSupportActionBar().setTitle(artistName);
             // call async task to load the track
             new loadTrack().execute(new String[]{trackId});
         }
